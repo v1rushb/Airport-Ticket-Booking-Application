@@ -1,0 +1,14 @@
+/home/v1rushb/Foothill/AirportBookingSystem/bin/Debug/net8.0/AirportBookingSystem
+/home/v1rushb/Foothill/AirportBookingSystem/bin/Debug/net8.0/AirportBookingSystem.deps.json
+/home/v1rushb/Foothill/AirportBookingSystem/bin/Debug/net8.0/AirportBookingSystem.runtimeconfig.json
+/home/v1rushb/Foothill/AirportBookingSystem/bin/Debug/net8.0/AirportBookingSystem.dll
+/home/v1rushb/Foothill/AirportBookingSystem/bin/Debug/net8.0/AirportBookingSystem.pdb
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.GeneratedMSBuildEditorConfig.editorconfig
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.AssemblyInfoInputs.cache
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.AssemblyInfo.cs
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.csproj.CoreCompileInputs.cache
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.dll
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/refint/AirportBookingSystem.dll
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.pdb
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.genruntimeconfig.cache
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/ref/AirportBookingSystem.dll

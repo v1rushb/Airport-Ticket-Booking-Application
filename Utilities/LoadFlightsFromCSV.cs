@@ -1,0 +1,32 @@
+using System;
+
+namespace Airport {
+    public static class LoadFlightsFromCSV { //after gym: do dep inj.
+        public static void LoadFlights(string path) {
+            var flights = new List<Flight>();
+            try {
+                var lines = File.ReadAllLines(path);
+                foreach(var line in lines) {
+                    var data = line.Split(',');
+                    if(data.Length != 6) {
+                        // Console.WriteLine($"Invalid data format in line {line}");
+                        throw new Exception($"Invalid data format in line {line}");
+                        // continue;
+                    }
+
+                    flights.Add(new Flight{
+                        FlightID = data[0],
+                        DepartedCountry = data[1],
+                        DestinatedCountry = data[2],
+                        DepartureTime = DateTime.Parse(data[3]), //TODO : use TryParse
+                        Cost = int.Parse(data[4]),
+                        Class = (FlightClass)Enum.Parse(typeof(FlightClass), data[5]), // look for an alternative way.
+                    });
+                }
+            } catch(Exception ex) {
+                System.Console.WriteLine($"Error while reading CSV File.");
+            }
+            return flights;
+        }        
+    }
+}

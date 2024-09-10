@@ -14,7 +14,7 @@ namespace Airport {
         }
 
         public Flight? GetFlightByID(string ID) {
-            return _flights.Find(el => el.FlightID == ID);
+            return _flights.FirstOrDefault(el => el.FlightID == ID);
         }
 
         public void DisplayFlightInfo() {
@@ -22,5 +22,8 @@ namespace Airport {
                 System.Console.WriteLine($"Flight ID: {flight.FlightID}, From: {flight.DepartedCountry} to {flight.DestinatedCountry}, Class: {flight.Class}, Price: {flight.Cost}");
             }
         }
+
+        //TODO: implement the LookUpFlights() -> List<Flights>
+        //TODO make a flights have their own cap, making some unavailable.
     }
 }

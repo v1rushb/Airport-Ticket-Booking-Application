@@ -16,7 +16,7 @@ namespace Airport {
             sb.AppendLine($"Passenger: {passenger.Name}, Age: {passenger.Age}, Phone: {passenger.Phone}");
             sb.AppendLine($"Flight ID: {flight.FlightID}, Class: {flight.Class}");
             sb.AppendLine($"Price: ${Price}, Booking Date: {BookingDate}");
-            System.Console.WriteLine(sb.ToString());
+            Console.WriteLine(sb.ToString());
         }
     }
 }

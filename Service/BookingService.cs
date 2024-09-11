@@ -8,6 +8,12 @@ namespace Airport {
         private readonly List<Booking> _bookings = []; // TODO check why var here is not noice
         private readonly FlightService _flightService = flightService;
 
+        public FlightService FlightService {
+            get {
+                return _flightService;
+            }
+        }
+
         public void Book(Flight targetFlight, Passenger booker) {
             _bookings.Add(new Booking { 
                 BID = Guid.NewGuid().ToString(),

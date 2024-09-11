@@ -12,6 +12,16 @@ namespace Airport {
         public required DateTime DepartureTime { get; set; }
 
         public required FlightClass Class { get; set; }
+
+        public void DisplayFlightInfo()
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine($"Flight ID: {FlightID}");
+            sb.AppendLine($"Flight Cost: {Cost}");
+            sb.AppendLine($"From {DepartedCountry} To {DestinatedCountry}");
+            sb.AppendLine($"Departure Time: {DepartureTime} \n");
+            Console.WriteLine(sb.ToString());
+        }
     }
 
     public enum FlightClass {

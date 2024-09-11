@@ -1,8 +1,8 @@
 using System;
 
-namespace Airport {
+namespace Airport.Utilties {
     public static class LoadFlightsFromCSV { //after gym: do dep inj.
-        public static void LoadFlights(string path) {
+        public static List<Flight> LoadFlights(string path) {
             var flights = new List<Flight>();
             try {
                 var lines = File.ReadAllLines(path);

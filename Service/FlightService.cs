@@ -1,4 +1,5 @@
 using System;
+using Airport.Utilties;
 
 namespace Airport {
     public class FlightService {
@@ -23,7 +24,27 @@ namespace Airport {
             }
         }
 
-        //TODO: implement the LookUpFlights() -> List<Flights>
+        public void LoadFlights(string filePath) {
+            var flights = LoadFlightsFromCSV.LoadFlights(filePath);
+            _flights.AddRange(flights);
+
+            Console.WriteLine($"Loaded {flights.Count} into current flights.");
+        }
+
+        public void SaveFlights(string filePath) {
+            SaveFlightsIntoCSV.SaveFlights(filePath, _flights);
+
+            Console.WriteLine($"Saved {_flights.Count} into: {filePath}");
+        }
+
+        //TODO: implement the LookUpFlights() -> List<Flights> 
+        public List<Flight> LookUpFlights(string? departedCountry = null, string? destinatedCountry= null , DateTime? departureTime = null,
+                                            FlightClass? classType = null ) { // method for a tpyical user.
+                                            return _flights.Where(el => (departedCountry== null || el.DepartedCountry.Equals(departedCountry, StringComparison.OrdinalIgnoreCase)) &&
+                                                                    (destinatedCountry == null || el.DestinatedCountry.Equals(destinatedCountry, StringComparison.OrdinalIgnoreCase)) &&
+                                                                    (departureTime == null || el.DepartureTime.Date == departureTime.Value.Date) &&
+                                                                    (classType == null || el.Class == classType)).ToList();
+        }
         //TODO make a flights have their own cap, making some unavailable.
     }
 }

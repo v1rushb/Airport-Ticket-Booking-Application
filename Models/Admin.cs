@@ -12,9 +12,9 @@ namespace Airport.Models {
             _flightService = flightService;
         }
 
-        public AddFlight() {
+        // public AddFlight() {
             
-        }
+        // }
 
 
     }

@@ -132,8 +132,8 @@ $RECYCLE.BIN/
 
 _NCrunch*
 
-# haha ignore self
-.gitignore
+# # haha ignore self
+# .gitignore
 
 bin*
 

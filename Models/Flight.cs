@@ -1,4 +1,5 @@
 using Airport.Enums;
+using Airport.Utilties;
 
 namespace Airport.Models {
     public class Flight {
@@ -9,6 +10,7 @@ namespace Airport.Models {
         public required string DepartedCountry { get; set; }
         public required string DestinatedCountry { get; set; }
 
+        [FutureDate(ErrorMessage = "Departure Time must be in the future.")]
         public required DateTime DepartureTime { get; set; }
 
         public required FlightClass Class { get; set; }

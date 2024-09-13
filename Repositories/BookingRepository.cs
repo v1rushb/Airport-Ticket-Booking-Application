@@ -6,8 +6,8 @@ using Airport.Models;
 
 namespace Airport.Repositories {
     public class BookingRepository : IRepository<Booking> {
-        private readonly string targetCSVFilePath = "Data/Bookings.csv";
-        private List<Booking> _bookings;
+        private readonly string targetCSVFilePath = @"Data/Bookings.csv";
+        private List<Booking> _bookings; // TODO: find a way to initialize with state.
 
         public IEnumerable<Booking> GetAll() {
             return _bookings;
@@ -39,8 +39,8 @@ namespace Airport.Repositories {
             }
         }
 
-        public void Delete(string ID) {
-            var currentBooking = GetByID(ID);
+        public void Delete(Booking booking) {
+            var currentBooking = GetByID(booking.BID);
             if(currentBooking != null) {
                 _bookings.Remove(currentBooking);
             }

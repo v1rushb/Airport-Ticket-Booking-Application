@@ -1,17 +1,20 @@
 using Airport.Models;
 using Airport.Enums;
 using Airport.Interfaces;
+using Airport.Utilties;
 
 namespace Airport.Service {
     public class BookingService : IBookingService {
         private readonly IRepository<Booking> _bookingRepository;
         private readonly IFlightService _flightService;
         private readonly IValidationService _validateService;
+        private readonly ICSVBookingLoader _csvBookLoader;
 
-        public BookingService(IRepository<Booking> bookingRepository, IFlightService flightService, IValidationService validationService) {
+        public BookingService(IRepository<Booking> bookingRepository, IFlightService flightService, IValidationService validationService, ICSVBookingLoader csvBookLoader) {
             _bookingRepository = bookingRepository;
             _flightService = flightService;
             _validateService = validationService;
+            _csvBookLoader = csvBookLoader;
         }
 
         public Booking? BookFlight(Passenger bpassenger, Flight targetFlight) {
@@ -66,31 +69,37 @@ namespace Airport.Service {
         }
 
         public void LoadBookings(string targetCSVFilePath) {
-            var flights = _csvFlightLoader.LoadFlights(targetCSVFilePath);
-            var validFlights = new List<Flight>();
-            var errors = new Dictionary<Flight, List<string>>();
+            var bookings = _csvBookLoader.LoadBookings(targetCSVFilePath);
+            var validBookings = new List<Booking>();
+            var errors = new Dictionary<Booking, List<string>>();
 
-            foreach(var flight in flights) {
-                var validationResult = ValidateFlight(flight);
-                if(validationResult.IsValid) {
-                    validFlights.Add(flight);
+            foreach (var booking in bookings) {
+                var validationResult = _validateService.Validate(booking);
+                if (validationResult.IsValid) {
+                    validBookings.Add(booking);
                 } else {
-                    errors.Add(flight, validationResult.Errors.Select(el => el.ErrorMessage).ToList());
+                    errors.Add(booking, validationResult.Errors.Select(e => e.ErrorMessage).ToList());
                 }
             }
-            foreach(var flight in validFlights) {
-                System.Console.WriteLine(flight);
-                _flightRepository.Add(flight);
+
+            foreach (var booking in validBookings) {
+                System.Console.WriteLine(booking);
+                _bookingRepository.Add(booking);
             }
 
-            if(errors.Any()) {
-                foreach(var error in errors) {
-                    System.Console.WriteLine($"Errors for flight {error.Key.FlightID}: ");
-                    foreach(var msg in error.Value) {
+            if (errors.Any()) {
+                foreach (var error in errors) {
+                    System.Console.WriteLine($"Errors for booking {error.Key.BID}: ");
+                    foreach (var msg in error.Value) {
                         System.Console.WriteLine($"- {msg}");
                     }
                 }
             }
+        }
+
+        void IBookingService.SaveBookings(string targetCSVFilePath)
+        {
+            throw new NotImplementedException();
         }
     }
 }

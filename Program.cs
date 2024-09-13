@@ -13,11 +13,14 @@ namespace Airport {
             var validationService = new ValidationService();
             var csvFlightLoader = new LoadFlightsFromCSV();
             var csvFlightSaver = new SaveFlightsIntoCSV();
+            var csvPassenger = new LoadPassengersFromCSV();
+            var passengerRepository = new PassengerRepository(csvPassenger);
+            var csvBookingLoader = new LoadBookingsFromCSV(flightRepository, passengerRepository);
 
             IFlightService flightService = new FlightService(flightRepository, csvFlightLoader, csvFlightSaver, validationService);
-            IBookingService bookingService = new BookingService(bookingRepository, flightService, validationService);
+            IBookingService bookingService = new BookingService(bookingRepository, flightService, validationService, csvBookingLoader);
 
-            var app = new BookingApplication(flightService, bookingService);
+            var app = new BookingApplication(flightService, bookingService, passengerRepository);
             app.Start();
         }
     }

@@ -1,8 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Airport.Models;
+using Airport.Enums;
 
-namespace Airport {
+namespace Airport.Service {
     public class BookingService(FlightService flightService)
     {
         private readonly List<Booking> _bookings = []; // TODO check why var here is not noice

@@ -1,6 +1,4 @@
-using System;
-
-namespace Airport {
+namespace Airport.Models {
     public class Passenger : Person {
         public void DisplayPassengerInfo()
         {

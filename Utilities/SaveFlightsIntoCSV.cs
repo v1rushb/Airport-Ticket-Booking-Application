@@ -1,4 +1,4 @@
-using System;
+using Airport.Models;
 
 namespace Airport.Utilties {
     public static class SaveFlightsIntoCSV {
@@ -12,6 +12,7 @@ namespace Airport.Utilties {
                 Console.WriteLine($"Successfully saved {flights.Count} flights to {csvPath}");
             } catch (Exception ex) {
                 Console.WriteLine($"Something's up with file: {csvPath}");
+                Console.WriteLine($"More info: {ex.Message}");
             }
         }
     }   

@@ -1,7 +1,5 @@
-﻿using System;
-
-namespace Airport {
-    class Program {
+﻿namespace Airport.Interface {
+    class UserInterface {
         internal static void Main() {
             System.Console.WriteLine("Yoink");
         }

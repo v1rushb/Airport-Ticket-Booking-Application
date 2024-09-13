@@ -1,7 +1,8 @@
-using System;
 using Airport.Utilties;
+using Airport.Models;
+using Airport.Enums;
 
-namespace Airport {
+namespace Airport.Service {
     public class FlightService {
         private readonly List<Flight> _flights = new List<Flight>();
 

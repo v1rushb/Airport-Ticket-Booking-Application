@@ -1,6 +1,6 @@
-using System;
+using Airport.Enums;
 
-namespace Airport {
+namespace Airport.Models {
     public class Flight {
         public required string FlightID { get; set; } // probs not practical for large datasets? TODO -> look for an alternative way.
         // check booking TODO

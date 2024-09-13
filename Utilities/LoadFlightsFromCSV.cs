@@ -1,4 +1,6 @@
 using System;
+using Airport.Models;
+using Airport.Enums;
 
 namespace Airport.Utilties {
     public static class LoadFlightsFromCSV { //after gym: do dep inj.

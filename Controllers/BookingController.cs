@@ -1,7 +1,9 @@
-using System;
+using Airport.Service;
 
-namespace Airport {
+namespace Airport.Controllers {
     public class BookingController {
-        private readonly BookingService _bookingService; 
+        private readonly BookingService _bookingService;
+
+        
     }
 }

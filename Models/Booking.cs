@@ -1,6 +1,4 @@
-using System;
-
-namespace Airport {
+namespace Airport.Models {
     public class Booking {
         public required string BID { get; set; } // TODO lookup other things to make an int ID. 
         public required Flight flight { get; set; }

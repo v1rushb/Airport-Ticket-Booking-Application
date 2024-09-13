@@ -13,6 +13,12 @@ namespace Airport {
 
         public required FlightClass Class { get; set; }
 
+        public required string ArrivalAirport { get; set; }
+
+        public required string DepartedAirport { get; set; } 
+
+
+
         public void DisplayFlightInfo()
         {
             var sb = new System.Text.StringBuilder();
@@ -20,13 +26,9 @@ namespace Airport {
             sb.AppendLine($"Flight Cost: {Cost}");
             sb.AppendLine($"From {DepartedCountry} To {DestinatedCountry}");
             sb.AppendLine($"Departure Time: {DepartureTime} \n");
+            sb.AppendLine($"Airrival Airport: {ArrivalAirport} \n");
+            sb.AppendLine($"Departed Airport: {DepartedAirport} \n");
             Console.WriteLine(sb.ToString());
         }
-    }
-
-    public enum FlightClass {
-        Economy,
-        Business,
-        FirstClass,
     }
 }

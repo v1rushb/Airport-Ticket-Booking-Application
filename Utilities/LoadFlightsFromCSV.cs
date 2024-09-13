@@ -8,7 +8,7 @@ namespace Airport.Utilties {
                 var lines = File.ReadAllLines(path);
                 foreach(var line in lines) {
                     var data = line.Split(',');
-                    if(data.Length != 6) {
+                    if(data.Length != 8) {
                         // Console.WriteLine($"Invalid data format in line {line}");
                         throw new Exception($"Invalid data format in line {line}");
                         // continue;
@@ -21,10 +21,12 @@ namespace Airport.Utilties {
                         DepartureTime = DateTime.Parse(data[3]), //TODO : use TryParse
                         Cost = int.Parse(data[4]),
                         Class = (FlightClass)Enum.Parse(typeof(FlightClass), data[5]), // look for an alternative way.
+                        ArrivalAirport = data[6],
+                        DepartedAirport = data[7]
                     });
                 }
             } catch(Exception ex) {
-                System.Console.WriteLine($"Error while reading CSV File.");
+                Console.WriteLine($"Error while reading CSV File.");
             }
             return flights;
         }        

@@ -21,7 +21,7 @@ namespace Airport {
         public void DisplayFlightInfo() {
             foreach (var flight in _flights) {
                 System.Console.WriteLine($"Flight ID: {flight.FlightID}, From: {flight.DepartedCountry} to {flight.DestinatedCountry}, Class: {flight.Class}, Price: {flight.Cost}");
-            }
+            } // TODO: add DepartedAirport and ArrivedAirport
         }
 
         public void LoadFlights(string filePath) {
@@ -39,12 +39,15 @@ namespace Airport {
 
         //TODO: implement the LookUpFlights() -> List<Flights> 
         public List<Flight> LookUpFlights(string? departedCountry = null, string? destinatedCountry= null , DateTime? departureTime = null,
-                                            FlightClass? classType = null ) { // method for a tpyical user.
+                                            FlightClass? classType = null, string? departedAirport = null, string? arrivalAirport = null) { // method for a tpyical user.
                                             return _flights.Where(el => (departedCountry== null || el.DepartedCountry.Equals(departedCountry, StringComparison.OrdinalIgnoreCase)) &&
                                                                     (destinatedCountry == null || el.DestinatedCountry.Equals(destinatedCountry, StringComparison.OrdinalIgnoreCase)) &&
                                                                     (departureTime == null || el.DepartureTime.Date == departureTime.Value.Date) &&
-                                                                    (classType == null || el.Class == classType)).ToList();
+                                                                    (classType == null || el.Class == classType)
+                                                                    && (departedAirport== null || el.DepartedAirport.Equals(departedAirport, StringComparison.OrdinalIgnoreCase)) 
+                                                                    && (arrivalAirport== null || el.ArrivalAirport.Equals(arrivalAirport, StringComparison.OrdinalIgnoreCase))).ToList();
         }
+
         //TODO make a flights have their own cap, making some unavailable.
     }
 }

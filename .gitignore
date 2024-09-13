@@ -133,6 +133,9 @@ $RECYCLE.BIN/
 _NCrunch*
 
 # haha ignore self
-# .gitignore
+.gitignore
 
+bin*
+
+obj/*
 *.csv

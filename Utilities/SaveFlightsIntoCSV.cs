@@ -7,7 +7,7 @@ namespace Airport.Utilties {
                 var writer = new StreamWriter(csvPath);
                 foreach(var flight in flights) {
                     writer.WriteLine($"{flight.FlightID},{flight.DepartedCountry},{flight.DestinatedCountry}," + 
-                                        $"{flight.DepartureTime},{flight.Cost},{flight.Class}");
+                                        $"{flight.DepartureTime},{flight.Cost},{flight.Class},{flight.ArrivalAirport},{flight.DepartedAirport}");
                 }
                 Console.WriteLine($"Successfully saved {flights.Count} flights to {csvPath}");
             } catch (Exception ex) {

@@ -3,7 +3,7 @@
 namespace Airport {
     class Program {
         internal static void Main() {
-            System.Console.WriteLine("yoink");
+            System.Console.WriteLine("Yoink");
         }
     }
 }

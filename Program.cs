@@ -16,9 +16,10 @@ namespace Airport {
             var csvPassenger = new LoadPassengersFromCSV();
             var passengerRepository = new PassengerRepository(csvPassenger);
             var csvBookingLoader = new LoadBookingsFromCSV(flightRepository, passengerRepository);
+            var csvBookingSaver = new SaveBookingIntoCSV();
 
             IFlightService flightService = new FlightService(flightRepository, csvFlightLoader, csvFlightSaver, validationService);
-            IBookingService bookingService = new BookingService(bookingRepository, flightService, validationService, csvBookingLoader);
+            IBookingService bookingService = new BookingService(bookingRepository, flightService, validationService, csvBookingLoader, csvBookingSaver);
 
             var app = new BookingApplication(flightService, bookingService, passengerRepository);
             app.Start();

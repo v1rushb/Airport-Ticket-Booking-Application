@@ -11,6 +11,8 @@ namespace Airport.Service {
 
         private readonly IValidationService _validationService;
 
+        private readonly string resourcesPath = @"Data/Flights.csv";
+
 
 
         public FlightService(IRepository<Flight> flightRepository, ICSVFlightLoader csvFlightLoader, ICSVFlightSaver csvFlightSaver, IValidationService validationService) {
@@ -71,6 +73,10 @@ namespace Airport.Service {
 
         public Dictionary<string, string> GetValidatedRules() {
             return _validationService.GetValidationRules<Flight>();
+        }
+        private void SyncFlights() {
+            var flights = _flightRepository.GetAll().ToList();
+            _csvFlightSaver.SaveFlights(resourcesPath, flights);
         }
     }
 }

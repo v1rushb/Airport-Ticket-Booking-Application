@@ -9,12 +9,15 @@ namespace Airport.Service {
         private readonly IFlightService _flightService;
         private readonly IValidationService _validateService;
         private readonly ICSVBookingLoader _csvBookLoader;
+        private readonly ICSVBookingSaver _csvBookSaver;
+        private readonly string resourcesPath = @"Data/Bookings.csv";
 
-        public BookingService(IRepository<Booking> bookingRepository, IFlightService flightService, IValidationService validationService, ICSVBookingLoader csvBookLoader) {
+        public BookingService(IRepository<Booking> bookingRepository, IFlightService flightService, IValidationService validationService, ICSVBookingLoader csvBookLoader, ICSVBookingSaver csvBookSaver) {
             _bookingRepository = bookingRepository;
             _flightService = flightService;
             _validateService = validationService;
             _csvBookLoader = csvBookLoader;
+            _csvBookSaver = csvBookSaver;
         }
 
         public Booking? BookFlight(Passenger bpassenger, Flight targetFlight, FlightClass flightClass) {
@@ -30,6 +33,7 @@ namespace Airport.Service {
             var validationResult = _validateService.Validate(newBooking);
             if(validationResult.IsValid) {
                 _bookingRepository.Add(newBooking);
+                SyncBookings();
                 return newBooking;
             }
             //check errors here.
@@ -55,11 +59,13 @@ namespace Airport.Service {
 
         public void CancelBooking(string BID) {
             _bookingRepository.Delete(BID);
+            SyncBookings();
         }
 
         public void ModifyBooking(Booking booking) {
             booking.Price = booking.flight.Cost * GetPriceMultiplier(booking.FlightClassType);
             _bookingRepository.Update(booking);
+            SyncBookings();
         }
 
         public IEnumerable<Booking> GetBookingByPassenger(string passengerID) {
@@ -96,6 +102,18 @@ namespace Airport.Service {
                     }
                 }
             }
+        }
+
+        void SaveBookings(string targetCSVFilePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SyncBookings() {
+            var bookings = GetAllBookings().ToList();
+            foreach(var el in bookings)
+                el.DisplayBookingInfo();
+            _csvBookSaver.SaveBookings(resourcesPath, bookings);
         }
 
         void IBookingService.SaveBookings(string targetCSVFilePath)

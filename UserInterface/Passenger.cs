@@ -72,6 +72,9 @@ namespace Airport.UserInterface {
                         break;
                     case "6":
 
+                    case "7":
+                        return;
+
                     default:
                         System.Console.WriteLine("Invalid Option.");
                         break;

@@ -17,27 +17,49 @@ namespace Airport.UserInterface {
         }
 
         public void StartMenu() {
-            System.Console.WriteLine("Please Enter your ID: "); // do validations later
-            var passengerID = Console.ReadLine();
+            string passengerName, passengerEmail, phoneNumber;
+            int age;
+            while (true) {
+                System.Console.WriteLine("Please enter your Name: ");
+                passengerName = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(passengerName)) {
+                    break;
+                }
+                System.Console.WriteLine("Name cannot be empty. Please enter a valid name.");
+            }
 
-            System.Console.WriteLine("Please enter your Name: ");
-            var passengerName = Console.ReadLine();
+            while (true) {
+                System.Console.WriteLine("Please enter your Email: ");
+                passengerEmail = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(passengerEmail)) {
+                    break;
+                }
+                System.Console.WriteLine("Invalid email format. Please enter a valid email.");
+            }
 
-            System.Console.WriteLine("Please enter your Email: ");
-            var passengerEmail = Console.ReadLine();
+            while (true) {
+                int lowerBoundAgeLimit = 12, upperBoundAgeLimit = 120;
+                System.Console.WriteLine("Please enter your Age: ");
+                var ageInput = Console.ReadLine();
+                if (int.TryParse(ageInput, out age) && age > lowerBoundAgeLimit && age <= upperBoundAgeLimit) {
+                    break;
+                }
+                System.Console.WriteLine("Invalid age. Please enter a valid age between 12 and 120.");
+            }
 
-            System.Console.WriteLine("Please enter your age: ");
-
-            var age = Console.ReadLine(); // do validations!
-
-            System.Console.WriteLine("Please Enter your phone Number: ");
-            
-            var phoneNumber = Console.ReadLine();
+            while (true) {
+                System.Console.WriteLine("Please Enter your Phone Number: ");
+                phoneNumber = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(phoneNumber) && phoneNumber.All(char.IsDigit)) { // do palestinian one later.
+                    break;
+                }
+                System.Console.WriteLine("Invalid phone number. Please enter a valid phone number.");
+            };
 
             currentPassenger = new Airport.Models.Passenger{
-                ID = passengerID,
+                ID = Guid.NewGuid().ToString(),
                 Name = passengerName,
-                Age = int.Parse(age),
+                Age = age,
                 Email = passengerEmail,
                 Phone = phoneNumber,
             };
@@ -71,6 +93,8 @@ namespace Airport.UserInterface {
                         ModifyBooking(); //fix me pls
                         break;
                     case "6":
+                        GetAllFlights();
+                        break;
 
                     case "7":
                         return;
@@ -217,27 +241,34 @@ namespace Airport.UserInterface {
             //TODO: do later after fixing class type in booking and flight class
             System.Console.WriteLine("Enter Booking ID to modify: ");
             var choice = Console.ReadLine();
-            var existingBooking = _bookingService.GetBookingByPassenger(choice);
+            var existingBooking = _bookingService.GetBookingByPassenger(currentPassenger.ID).FirstOrDefault(el => el.BID.Equals(choice));
             if(existingBooking == null) {
                 System.Console.WriteLine($"Booking with ID {choice} not found.");
             }
 
             System.Console.WriteLine(@"Enter a new Flight ID, or just Press 'Enter'.");
             var newFlightID = Console.ReadLine();
-            var newFlight = _flightService.LookUpFlights(new SearchCriteria { }).FirstOrDefault(el => el.FlightID.Equals(newFlightID));
-            if(newFlight == null) {
-                System.Console.WriteLine($"{newFlightID} is an invalid ID for a flight.");
-                return;
+            if(!string.IsNullOrWhiteSpace(newFlightID)) {
+                var newFlight = _flightService.LookUpFlights(new SearchCriteria { }).FirstOrDefault(el => el.FlightID.Equals(newFlightID));
+                if(newFlight == null) {
+                    System.Console.WriteLine($"{newFlightID} is an invalid ID for a flight.");
+                    return;
+                }
+                existingBooking.flight = newFlight;
             }
             System.Console.WriteLine("Select Class: {Economy / Business / FirstClass}");
             var newClassChoice = Console.ReadLine();
-            if(Enum.TryParse(newClassChoice, out FlightClass flightClass)) {
-                // var newBooking = _bookingService.BookFlight(currentPassenger, flight);
-                ((Booking)existingBooking).flight = newFlight;
-                ((Booking)existingBooking).flight
-            }
-            System.Console.WriteLine("Booking's been changed successfully!");
 
+            if (!string.IsNullOrWhiteSpace(newClassChoice)) {
+                if(Enum.TryParse(newClassChoice, out FlightClass flightClass)) {
+                    existingBooking.FlightClassType = flightClass;
+                } else {
+                    System.Console.WriteLine($"Invalid class type: {newClassChoice}. Please enter a valid class.");
+                    return;
+                }
+            }
+                _bookingService.ModifyBooking(existingBooking);
+                System.Console.WriteLine("Booking's been changed successfully!");
 
         }
 

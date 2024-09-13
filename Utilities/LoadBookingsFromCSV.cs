@@ -1,3 +1,4 @@
+using Airport.Enums;
 using Airport.Interfaces;
 using Airport.Models;
 using Airport.Repositories;
@@ -45,12 +46,17 @@ namespace Airport.Utilties {
                         throw new FormatException($"Invalid price format in line {lineNumPtr}: {data[4]}");
                     }
 
+                    if(!Enum.TryParse<FlightClass>(data[5], out var flightClass)) {
+                        throw new FormatException($"Invalid Flight Class format in line {lineNumPtr}: {data[5]}");
+                    }
+
                     bookings.Add(new Booking {
                         BID = data[0],
                         passenger = passenger,
                         flight = flight,
                         BookingDate = bookingDate,
-                        Price = price
+                        Price = price,
+                        FlightClassType = flightClass,
                     });   
                 }
             } catch (IOException ex) {

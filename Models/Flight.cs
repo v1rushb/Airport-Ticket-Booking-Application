@@ -22,7 +22,7 @@ namespace Airport.Models {
         public DateTime DepartureTime { get; set; }
 
         [Required]
-        public FlightClass Class { get; set; }
+        public FlightClass Class { get; set; } // TODO: make this make sense.
 
         [Required]
         public string ArrivalAirport { get; set; }

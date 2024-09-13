@@ -64,5 +64,33 @@ namespace Airport.Service {
         public IEnumerable<Booking> GetAllBookings() {
             return _bookingRepository.GetAll();
         }
+
+        public void LoadBookings(string targetCSVFilePath) {
+            var flights = _csvFlightLoader.LoadFlights(targetCSVFilePath);
+            var validFlights = new List<Flight>();
+            var errors = new Dictionary<Flight, List<string>>();
+
+            foreach(var flight in flights) {
+                var validationResult = ValidateFlight(flight);
+                if(validationResult.IsValid) {
+                    validFlights.Add(flight);
+                } else {
+                    errors.Add(flight, validationResult.Errors.Select(el => el.ErrorMessage).ToList());
+                }
+            }
+            foreach(var flight in validFlights) {
+                System.Console.WriteLine(flight);
+                _flightRepository.Add(flight);
+            }
+
+            if(errors.Any()) {
+                foreach(var error in errors) {
+                    System.Console.WriteLine($"Errors for flight {error.Key.FlightID}: ");
+                    foreach(var msg in error.Value) {
+                        System.Console.WriteLine($"- {msg}");
+                    }
+                }
+            }
+        }
     }
 }

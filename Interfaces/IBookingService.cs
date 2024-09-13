@@ -8,6 +8,9 @@ namespace Airport.Interfaces {
         void CancelBooking(string BID);
         void ModifyBooking(Booking booking);
         IEnumerable<Booking> GetBookingByPassenger(string passengerID);
-        IEnumerable<Booking> GetAllBookings();
+        IEnumerable<Booking>? GetAllBookings();
+
+        void LoadBookings(string targetCSVFilePath);
+        void SaveBookings(string targetCSVFilePath);
     }
 }

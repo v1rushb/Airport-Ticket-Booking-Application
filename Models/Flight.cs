@@ -43,5 +43,7 @@ namespace Airport.Models {
             sb.AppendLine($"Departed Airport: {DepartedAirport} \n");
             Console.WriteLine(sb.ToString());
         }
+
+        public override string ToString() => $"{FlightID}, {Cost}";
     }
 }

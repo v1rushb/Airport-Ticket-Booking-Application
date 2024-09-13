@@ -5,12 +5,13 @@ namespace Airport.UserInterface {
         private readonly IFlightService _flightService;
         private readonly IBookingService _bookingService;
 
-        public BookingApplication(IFlightService flightService, IBookingService bookingService {
+        public BookingApplication(IFlightService flightService, IBookingService bookingService) {
             _flightService = flightService;
             _bookingService = bookingService;
         }
 
         public void Start() {
+            _flightService.LoadFlights("Data/Flights.csv");
             System.Console.WriteLine("Welcome to the Airport System!");
             System.Console.WriteLine("Are you a Passenger or a Manager? (P/M)");
             var choice = Console.ReadLine(); // probs read?
@@ -19,7 +20,8 @@ namespace Airport.UserInterface {
                 var passengerUI = new Airport.UserInterface.Passenger(_flightService, _bookingService);
                 passengerUI.StartMenu();
             } else if (choice.Equals("M", StringComparison.OrdinalIgnoreCase)) {
-                // manager now
+                var managerUI = new Manager(_flightService, _bookingService);
+                managerUI.StartMenu();
             } else {
                 System.Console.WriteLine("Invalid option.");
             }

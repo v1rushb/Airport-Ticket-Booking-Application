@@ -1,3 +1,4 @@
+using System.Data;
 using Airport.Interfaces;
 using Airport.Models;
 
@@ -5,8 +6,6 @@ namespace Airport.UserInterface {
     public class Manager {
         private readonly IFlightService _flightService;
         private readonly IBookingService _bookingService;
-        private Airport.Models.Passenger currentPassenger;
-
         public Manager(IFlightService flightService, IBookingService bookingService) {
             _flightService = flightService;
             _bookingService = bookingService;
@@ -18,7 +17,8 @@ namespace Airport.UserInterface {
                 Console.WriteLine("1. Filter Bookings");
                 Console.WriteLine("2. Load Flights");
                 Console.WriteLine("3. View Validation Rules");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. Display All Flights");
+                Console.WriteLine("5. Exit");
 
                 var choice = Console.ReadLine();
                 switch(choice) {
@@ -32,6 +32,9 @@ namespace Airport.UserInterface {
                         ViewValidationRules();
                         break;
                     case "4":
+                        DisplayAllFlights();
+                        break;
+                    case "5":
                         return;
                     default:
                         System.Console.WriteLine("Invalid Option.");
@@ -41,9 +44,15 @@ namespace Airport.UserInterface {
         }
 
         private void FilterBookings() {
-            var bookings = _bookingService.GetAllBookings();// do filter args later
-            foreach(var booking in bookings) {
-                System.Console.WriteLine(booking);
+            var bookings = _bookingService.GetAllBookings();
+    
+            if (bookings == null || !bookings.Any()) {
+                Console.WriteLine("No bookings available.");
+                return;
+            }
+
+            foreach (var booking in bookings) {
+                booking.DisplayBookingInfo();
             }
         }
 
@@ -60,6 +69,13 @@ namespace Airport.UserInterface {
             foreach (var rule in rules)
             {
                 Console.WriteLine($"{rule.Key}: {rule.Value}");
+            }
+        }
+
+        private void DisplayAllFlights() {
+            var flights = _flightService.LookUpFlights(new SearchCriteria{});
+            foreach(var flight in flights) {
+                flight.DisplayFlightInfo();
             }
         }
     }

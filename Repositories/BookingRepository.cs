@@ -7,10 +7,10 @@ using Airport.Models;
 namespace Airport.Repositories {
     public class BookingRepository : IRepository<Booking> {
         private readonly string targetCSVFilePath = @"Data/Bookings.csv";
-        private List<Booking> _bookings; // TODO: find a way to initialize with state.
+        private List<Booking> _bookings = new List<Booking>(); // TODO: find a way to initialize with state.
 
         public IEnumerable<Booking> GetAll() {
-            return _bookings;
+            return _bookings ?? new List<Booking>();
         }
 
         public Booking? GetByID(string ID) {

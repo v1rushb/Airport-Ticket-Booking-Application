@@ -4,11 +4,11 @@ using Airport.Models;
 
 namespace Airport.Repositories {
     public class FlightRepository : IRepository<Flight> {
-        private readonly string targetCSVFilePath = @"Date/Flights.csv"; // TODO: add a csv file validator later or just throw an excption
-        private List<Flight> _flights = [];
+        private readonly string targetCSVFilePath = @"Data/Flights.csv"; // TODO: add a csv file validator later or just throw an excption
+        private List<Flight> _flights = new List<Flight>();
 
         public IEnumerable<Flight> GetAll() {
-            return _flights;
+            return _flights ?? new List<Flight>();
         }
 
 
@@ -22,6 +22,7 @@ namespace Airport.Repositories {
         }
 
         public void Add(Flight flight) { // TODO: do some validation here.
+        System.Console.WriteLine("YOink!");
             var currentFlight = GetByID(flight.FlightID);
             if(currentFlight == null) {
                 _flights.Add(flight);

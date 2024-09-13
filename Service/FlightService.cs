@@ -44,8 +44,10 @@ namespace Airport.Service {
                     errors.Add(flight, validationResult.Errors.Select(el => el.ErrorMessage).ToList());
                 }
             }
-            foreach(var flight in validFlights)
+            foreach(var flight in validFlights) {
+                System.Console.WriteLine(flight);
                 _flightRepository.Add(flight);
+            }
 
             if(errors.Any()) {
                 foreach(var error in errors) {
@@ -59,6 +61,8 @@ namespace Airport.Service {
 
         public void SaveFlights(string targetCSVFilePath) {
             var flights = _flightRepository.GetAll().ToList();
+            foreach(var item in flights)
+                System.Console.WriteLine(item);
             _csvFlightSaver.SaveFlights(targetCSVFilePath, flights);
         }
 

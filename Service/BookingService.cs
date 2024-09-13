@@ -83,7 +83,6 @@ namespace Airport.Service {
             }
 
             foreach (var booking in validBookings) {
-                System.Console.WriteLine(booking);
                 _bookingRepository.Add(booking);
             }
 

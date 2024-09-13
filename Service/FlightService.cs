@@ -45,7 +45,6 @@ namespace Airport.Service {
                 }
             }
             foreach(var flight in validFlights) {
-                System.Console.WriteLine(flight);
                 _flightRepository.Add(flight);
             }
 

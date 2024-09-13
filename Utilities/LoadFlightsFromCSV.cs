@@ -48,6 +48,7 @@ namespace Airport.Utilties {
             } catch (Exception ex) {
                 Console.WriteLine($"Error while reading CSV File. \n Error: {ex.Message}");
             }
+            System.Console.WriteLine("Flights loaded successfully from CSV.");
             return flights;
         }
     }

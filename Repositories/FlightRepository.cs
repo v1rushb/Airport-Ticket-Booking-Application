@@ -22,11 +22,10 @@ namespace Airport.Repositories {
         }
 
         public void Add(Flight flight) { // TODO: do some validation here.
-        System.Console.WriteLine("YOink!");
             var currentFlight = GetByID(flight.FlightID);
             if(currentFlight == null) {
                 _flights.Add(flight);
-                System.Console.WriteLine($"Flight's been added! {flight}");
+                // System.Console.WriteLine($"Flight's been added! {flight}");
                 return;
             }
             throw new DuplicateNameException("Flight already exists.");

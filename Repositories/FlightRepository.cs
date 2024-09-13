@@ -1,6 +1,4 @@
-using System.Diagnostics.Contracts;
-using System.IO.Compression;
-using System.Runtime.CompilerServices;
+using System.Data;
 using Airport.Interfaces;
 using Airport.Models;
 
@@ -14,12 +12,23 @@ namespace Airport.Repositories {
         }
 
         public Flight? GetByID(string ID) {
-            return _flights.FirstOrDefault(el => el.FlightID.Equals(ID));
+            try {
+                return _flights.SingleOrDefault(el => el.FlightID.Equals(ID));
+            } catch(Exception ex) {
+                System.Console.WriteLine($"Error While fetching a booking with the ID: {ID} \n more  info: {ex}"); // idk handle using CEH?
+                throw new ApplicationException("Error While fetching a booking with the ID: {ID}", ex);
+            }
         }
 
         public void Add(Flight flight) { // TODO: do some validation here.
-            _flights.Add(flight);
-            System.Console.WriteLine($"Flight's been added! {flight}");
+            var currentFlight = GetByID(flight.FlightID);
+            if(currentFlight == null) {
+                _flights.Add(flight);
+                System.Console.WriteLine($"Flight's been added! {flight}");
+                return;
+            }
+            throw new DuplicateNameException("Flight already exists.");
+
         }
 
         public void Update(Flight flight) { // TODO: probs add some auto sync for addition and update and deletion to csv file.

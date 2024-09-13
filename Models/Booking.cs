@@ -5,7 +5,7 @@ namespace Airport.Models {
         public required Passenger passenger { get; set; }
         public required DateTime BookingDate { get; set; }
 
-        public required double Price { get; set; }
+        public required decimal Price { get; set; }
 
         public void DisplayBookingInfo()
         {

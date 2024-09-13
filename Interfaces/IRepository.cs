@@ -6,6 +6,6 @@ namespace Airport.Interfaces {
         T? GetByID(string id);
         void Add(T val);
         void Update(T val);
-        void Delete(T val);
+        void Delete(string ID);
     }
 }

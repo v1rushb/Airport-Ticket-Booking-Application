@@ -41,11 +41,11 @@ namespace Airport.Repositories {
             }
         }
 
-        public void Delete(Flight flight) {
-            var currentFlight = GetByID(flight.FlightID);
+        public void Delete(string ID) {
+            var currentFlight = GetByID(ID);
             if(currentFlight != null) {
                 _flights.Remove(currentFlight);
-                System.Console.WriteLine($"Flight: {flight}\n has been deleted."); // TODO: check correct format if needed.
+                // System.Console.WriteLine($"Flight: {flight}\n has been deleted."); // TODO: check correct format if needed.
             }
         }
 

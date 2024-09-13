@@ -39,8 +39,8 @@ namespace Airport.Repositories {
             }
         }
 
-        public void Delete(Booking booking) {
-            var currentBooking = GetByID(booking.BID);
+        public void Delete(string ID) {
+            var currentBooking = GetByID(ID);
             if(currentBooking != null) {
                 _bookings.Remove(currentBooking);
             }

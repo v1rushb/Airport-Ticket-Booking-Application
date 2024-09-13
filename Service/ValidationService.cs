@@ -6,10 +6,8 @@ namespace Airport.Service {
     public class ValidationService : IValidationService
     {
         public Utilties.ValidationResult Validate<T>(T obj) {
-            var context = new ValidationContext(obj);
             var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
-            bool isValid = Validator.TryValidateObject(obj, context, results, true);
-            
+            bool isValid = Validator.TryValidateObject(obj, new ValidationContext(obj), results, true);
             return new Utilties.ValidationResult {
                 IsValid = isValid,
                 Errors = results,
@@ -17,7 +15,7 @@ namespace Airport.Service {
 
         }
 
-        public Dictionary<string, string> GetValidatedRules<T>() {
+        public Dictionary<string, string> GetValidationRules<T>() {
             var rules = new Dictionary<string, string>();
             var properties = typeof(T).GetProperties();
             foreach(var property in properties) {

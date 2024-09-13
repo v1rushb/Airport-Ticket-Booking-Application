@@ -1,10 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Airport.Models {
     public class Booking {
-        public required string BID { get; set; } // TODO lookup other things to make an int ID. 
+        [Required]
+        public string BID { get; set; } // TODO lookup other things to make an int ID. 
+        [Required]
         public required Flight flight { get; set; }
+        [Required]
         public required Passenger passenger { get; set; }
+        [Required]
         public required DateTime BookingDate { get; set; }
 
+        [Required]
         public required decimal Price { get; set; }
 
         public void DisplayBookingInfo()

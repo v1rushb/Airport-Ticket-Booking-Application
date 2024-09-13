@@ -1,23 +1,34 @@
 using Airport.Enums;
 using Airport.Utilties;
+using System.ComponentModel.DataAnnotations;
 
 namespace Airport.Models {
-    public class Flight {
-        public required string FlightID { get; set; } // probs not practical for large datasets? TODO -> look for an alternative way.
+    public class Flight {   
+        [Required]
+        public string FlightID { get; set; } // probs not practical for large datasets? TODO -> look for an alternative way.
         // check booking TODO
-        public required decimal Cost { get; set; } 
+        
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be positive.")]
+        public decimal Cost { get; set; } 
 
-        public required string DepartedCountry { get; set; }
-        public required string DestinatedCountry { get; set; }
+        [Required]
+        public string DepartedCountry { get; set; }
+        [Required]
+        public string DestinatedCountry { get; set; }
 
+        [Required]
         [FutureDate(ErrorMessage = "Departure Time must be in the future.")]
-        public required DateTime DepartureTime { get; set; }
+        public DateTime DepartureTime { get; set; }
 
-        public required FlightClass Class { get; set; }
+        [Required]
+        public FlightClass Class { get; set; }
 
-        public required string ArrivalAirport { get; set; }
+        [Required]
+        public string ArrivalAirport { get; set; }
 
-        public required string DepartedAirport { get; set; } 
+        [Required]
+        public string DepartedAirport { get; set; } 
 
 
 

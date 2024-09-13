@@ -10,12 +10,12 @@ namespace Airport.Utilties {
                     writer.WriteLine($"{flight.FlightID},{flight.DepartedCountry},{flight.DestinatedCountry}," +
                                         $"{flight.DepartureTime},{flight.Cost},{flight.Class},{flight.ArrivalAirport},{flight.DepartedAirport}");
                     }
-                } catch(IOException ex) {
-                    throw new ApplicationException($"An error occurred while writing to the file: {path}", ex);
-                } catch(Exception ex) {
-                    Console.WriteLine($"Something's up with file: {path}");
-                    Console.WriteLine($"More info: {ex}");
-                }
+            } catch(IOException ex) {
+                throw new ApplicationException($"An error occurred while writing to the file: {path}", ex);
+            } catch(Exception ex) {
+                Console.WriteLine($"Something's up with file: {path}");
+                Console.WriteLine($"More info: {ex}");
+                throw;
             }
         }
     }

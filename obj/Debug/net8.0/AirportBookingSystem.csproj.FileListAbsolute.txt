@@ -12,3 +12,4 @@
 /home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.pdb
 /home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.genruntimeconfig.cache
 /home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/ref/AirportBookingSystem.dll
+/home/v1rushb/Foothill/AirportBookingSystem/obj/Debug/net8.0/AirportBookingSystem.sourcelink.json

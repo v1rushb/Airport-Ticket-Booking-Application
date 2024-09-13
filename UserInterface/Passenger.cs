@@ -99,42 +99,70 @@ namespace Airport.UserInterface {
             */
 
             Console.WriteLine(@"What's the cost? Enter or Ignore 'Press Enter'");
-            var cost = Console.ReadLine(); // DO PARSING PLS
+            var costInput = Console.ReadLine();
+            decimal? cost = null;
+            if (!string.IsNullOrEmpty(costInput) && decimal.TryParse(costInput, out var parsedCost)) {
+                cost = parsedCost;
+            }
 
             Console.WriteLine(@"What's the departed Country? Enter or Ignore 'Press Enter'");
             var departedCountry = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(departedCountry)) {
+                departedCountry = null;
+            }
 
             Console.WriteLine(@"What's the Destinated Country? Enter or Ignore 'Press Enter'");
             var destinatedCountry = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(destinatedCountry)) {
+                destinatedCountry = null;
+            }
 
             Console.WriteLine(@"What's the Departure time? Enter or Ignore 'Press Enter'");
-            var departureTime = Console.ReadLine();
+            var departureTimeInput = Console.ReadLine();
+            DateTime? departureTime = null;
+            if (!string.IsNullOrEmpty(departureTimeInput) && DateTime.TryParse(departureTimeInput, out var parsedDateTime)) {
+                departureTime = parsedDateTime;
+            }
 
             Console.WriteLine(@"What's the Arrival Airport? Enter or Ignore 'Press Enter'");
             var arrivalAirport = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(arrivalAirport)) {
+                arrivalAirport = null;
+            }
 
             Console.WriteLine(@"What's the Departed Airport? Enter or Ignore 'Press Enter'");
             var departedAirport = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(departedAirport)) {
+                departedAirport = null;
+            }
 
             Console.WriteLine(@"What's the Flight Class? Enter or Ignore 'Press Enter'");
-            var flightClass = Console.ReadLine();
+            var flightClassInput = Console.ReadLine();
+            FlightClass? flightClass = null;
+            if (!string.IsNullOrEmpty(flightClassInput) && Enum.TryParse<FlightClass>(flightClassInput, out var parsedClass)) {
+                flightClass = parsedClass;
+            }
 
 
             var criteria = new SearchCriteria{
-                Cost = decimal.Parse(cost),
+                Cost = cost,
                 DepartedCountry = departedCountry,
                 DestinatedCountry = destinatedCountry,
-                DepartureTime = DateTime.Now, // for now until u do ur shitty validations
+                DepartureTime = departureTime,
                 DepartedAirport = departedAirport,
                 ArrivalAirport = arrivalAirport,
-                ClassType = FlightClass.Business // do when when doing all parsing thingys altogether.
+                ClassType = flightClass
             };
 
             var flights = _flightService.LookUpFlights(criteria);
 
-            foreach(var flight in flights) {
-                System.Console.WriteLine($"Flight Number: {flight.FlightID}, Price: {flight.Cost}");
+            if(flights.Any()) {
+                foreach(var flight in flights) {
+                    flight.DisplayFlightInfo();
+                }
+                return;
             }
+            System.Console.WriteLine("No flights Matched your criteria.");
         }
 
         private void BookFlight() {
@@ -142,13 +170,14 @@ namespace Airport.UserInterface {
             var id = Console.ReadLine();
             var flight = _flightService.LookUpFlights(new SearchCriteria { }).FirstOrDefault(el => el.FlightID.Equals(id));
             if(flight != null) {
-                System.Console.WriteLine("Select Class: {Economy / Business / First Class}");
+                System.Console.WriteLine("Select Class: {Economy / Business / FirstClass}");
                 var classChoice = Console.ReadLine();
                 if(Enum.TryParse(classChoice, out FlightClass flightClass)) {
-                    var newBooking = _bookingService.BookFlight(currentPassenger, flight); // ughhh i need to pass classtype as well
+                    var newBooking = _bookingService.BookFlight(currentPassenger, flight, flightClass); // ughhh i need to pass classtype as well
 
                     if(newBooking != null) {
-                        System.Console.WriteLine($"Noice, you've booked! \n Info: {newBooking}");
+                        System.Console.WriteLine($"Noice, you've booked! \n Info:");
+                        newBooking.DisplayBookingInfo();
                     } else {
                         System.Console.WriteLine("Booking failed.");
                     }
@@ -165,7 +194,7 @@ namespace Airport.UserInterface {
             if(bookings != null) {
                 System.Console.WriteLine("Here are your Bookings: ");
                 foreach(var booking in bookings) {
-                    System.Console.WriteLine(booking);
+                    booking.DisplayBookingInfo();
                 }
             } else {
                 System.Console.WriteLine("No bookings found.");
@@ -178,6 +207,7 @@ namespace Airport.UserInterface {
             var existingBooking = _bookingService.GetBookingByPassenger(choice);
             if(existingBooking != null) {
                 _bookingService.CancelBooking(choice);
+                System.Console.WriteLine("Booking has been canceled!");
                 return;
             }
             System.Console.WriteLine("No booking was found.");
@@ -185,6 +215,30 @@ namespace Airport.UserInterface {
 
         private void ModifyBooking() {
             //TODO: do later after fixing class type in booking and flight class
+            System.Console.WriteLine("Enter Booking ID to modify: ");
+            var choice = Console.ReadLine();
+            var existingBooking = _bookingService.GetBookingByPassenger(choice);
+            if(existingBooking == null) {
+                System.Console.WriteLine($"Booking with ID {choice} not found.");
+            }
+
+            System.Console.WriteLine(@"Enter a new Flight ID, or just Press 'Enter'.");
+            var newFlightID = Console.ReadLine();
+            var newFlight = _flightService.LookUpFlights(new SearchCriteria { }).FirstOrDefault(el => el.FlightID.Equals(newFlightID));
+            if(newFlight == null) {
+                System.Console.WriteLine($"{newFlightID} is an invalid ID for a flight.");
+                return;
+            }
+            System.Console.WriteLine("Select Class: {Economy / Business / FirstClass}");
+            var newClassChoice = Console.ReadLine();
+            if(Enum.TryParse(newClassChoice, out FlightClass flightClass)) {
+                // var newBooking = _bookingService.BookFlight(currentPassenger, flight);
+                ((Booking)existingBooking).flight = newFlight;
+                ((Booking)existingBooking).flight
+            }
+            System.Console.WriteLine("Booking's been changed successfully!");
+
+
         }
 
         private void GetAllFlights() {
@@ -192,7 +246,7 @@ namespace Airport.UserInterface {
             if(flights.Count() != 0) {
                 System.Console.WriteLine("Displaying Current Available flights:"); // fix date thingy later.
                 foreach(var flight in flights) {
-                    System.Console.WriteLine(flight);
+                    flight.DisplayFlightInfo();
                 }
             }
         }

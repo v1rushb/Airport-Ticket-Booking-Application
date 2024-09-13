@@ -38,9 +38,9 @@ namespace Airport.Models {
             sb.AppendLine($"Flight ID: {FlightID}");
             sb.AppendLine($"Flight Cost: {Cost}");
             sb.AppendLine($"From {DepartedCountry} To {DestinatedCountry}");
-            sb.AppendLine($"Departure Time: {DepartureTime} \n");
-            sb.AppendLine($"Airrival Airport: {ArrivalAirport} \n");
-            sb.AppendLine($"Departed Airport: {DepartedAirport} \n");
+            sb.AppendLine($"Departure Time: {DepartureTime}");
+            sb.AppendLine($"Airrival Airport: {ArrivalAirport}");
+            sb.AppendLine($"Departed Airport: {DepartedAirport}");
             Console.WriteLine(sb.ToString());
         }
 

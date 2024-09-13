@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Airport.Enums;
 
 namespace Airport.Models {
     public class Booking {
@@ -14,6 +15,9 @@ namespace Airport.Models {
         [Required]
         public required decimal Price { get; set; }
 
+        [Required]
+        public required FlightClass FlightClassType { get; set; }
+
         public void DisplayBookingInfo()
         {
             var sb = new System.Text.StringBuilder();
@@ -21,6 +25,7 @@ namespace Airport.Models {
             sb.AppendLine($"Passenger: {passenger.Name}, Age: {passenger.Age}, Phone: {passenger.Phone}");
             sb.AppendLine($"Flight ID: {flight.FlightID}, Class: {flight.Class}");
             sb.AppendLine($"Price: ${Price}, Booking Date: {BookingDate}");
+            sb.AppendLine($"Flight Class: {FlightClassType}");
             Console.WriteLine(sb.ToString());
         }
     }

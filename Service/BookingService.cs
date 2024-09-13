@@ -17,13 +17,14 @@ namespace Airport.Service {
             _csvBookLoader = csvBookLoader;
         }
 
-        public Booking? BookFlight(Passenger bpassenger, Flight targetFlight) {
+        public Booking? BookFlight(Passenger bpassenger, Flight targetFlight, FlightClass flightClass) {
             var newBooking = new Booking {
                 BID = Guid.NewGuid().ToString(),
                 passenger = bpassenger,
                 flight = targetFlight,
                 BookingDate = DateTime.Now,
-                Price = targetFlight.Cost * GetPriceMultiplier(targetFlight.Class)
+                Price = targetFlight.Cost * GetPriceMultiplier(flightClass),
+                FlightClassType = flightClass,
             };
 
             var validationResult = _validateService.Validate(newBooking);
@@ -57,6 +58,7 @@ namespace Airport.Service {
         }
 
         public void ModifyBooking(Booking booking) {
+            booking.Price = booking.flight.Cost * GetPriceMultiplier(booking.FlightClassType);
             _bookingRepository.Update(booking);
         }
 

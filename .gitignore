@@ -135,7 +135,7 @@ _NCrunch*
 # # haha ignore self
 # .gitignore
 
-bin*
+bin/
 
-obj/*
-*.csv
+obj/
+*.csproj
